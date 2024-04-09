@@ -1,0 +1,28 @@
+{ pkgs, ... }:
+{
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      set fish_greeting
+      starship init fish | source
+    '';
+    shellInit = ''
+      ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
+    '';
+    shellAliases = {
+      rebuild-switch = "nixos-rebuild switch --flake /home/autumn/snow#cedar --use-remote-sudo";
+    };
+  };
+  programs.nix-index = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+  programs.zoxide = {
+    enable = true;
+    options = [ "--cmd cd" ];
+  };
+  programs.starship = {
+    enable = true;
+    settings = pkgs.lib.importTOML ./starship.toml;
+  };
+}
