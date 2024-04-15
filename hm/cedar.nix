@@ -12,11 +12,20 @@
   };
 
   programs.firefox.enable = true;
-  
+
+  fonts.fontconfig.enable = true;
+
   home.packages = with pkgs; [
     light
     wluma
     pavucontrol
     iio-sensor-proxy
+
+    # fonts
+    noto-fonts
+    noto-fonts-cjk
+    inter
+    roboto
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
 }

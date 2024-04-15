@@ -1,7 +1,10 @@
 { pkgs, ... }:
 {
+
+
   programs.ironbar = {
     enable = true;
+    style = builtins.readFile ./ironbar.css;
     config = {
       anchor_to_edges = true;
       position = "top";

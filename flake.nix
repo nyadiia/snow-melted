@@ -18,13 +18,25 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # ironbar = {
-    #   url = "github:JakeStanger/ironbar";
-    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
-    # };
+    ironbar = {
+      url = "github:JakeStanger/ironbar";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    hyprland-contrib = {
+      url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, nix-index-database, ... }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, nix-index-database, nix-vscode-extensions, stylix, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; config = { allowUnfree = true; }; };
@@ -40,13 +52,14 @@
             nixos-hardware.nixosModules.framework-13th-gen-intel
             nix-index-database.nixosModules.nix-index
             home-manager.nixosModules.home-manager
-            # inputs.ironbar.homeManagerModules.default
+            # stylix.nixosModules.stylix
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.autumn.imports = [
                 ./hm/cedar.nix
                 inputs.nix-index-database.hmModules.nix-index
+                inputs.ironbar.homeManagerModules.default
               ];
               home-manager.extraSpecialArgs = { inherit inputs unstable; };
             }

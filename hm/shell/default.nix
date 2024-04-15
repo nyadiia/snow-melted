@@ -10,7 +10,7 @@
       ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
     '';
     shellAliases = {
-      rebuild-switch = "nixos-rebuild switch --flake /home/autumn/snow#cedar --use-remote-sudo";
+      rebuild-switch = "sudo nixos-rebuild switch --flake /home/autumn/snow#cedar";
     };
   };
   programs.nix-index = {
@@ -24,5 +24,9 @@
   programs.starship = {
     enable = true;
     settings = pkgs.lib.importTOML ./starship.toml;
+  };
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
   };
 }
