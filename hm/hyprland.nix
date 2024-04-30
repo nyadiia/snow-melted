@@ -30,7 +30,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      debug.disable_logs = false;
+      # debug.disable_logs = false;
       exec-once = [
         "wl-paste --type text --watch cliphist store" #Stores only text data
         "wl-paste --type image --watch cliphist store" #Stores only image data
