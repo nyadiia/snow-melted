@@ -23,8 +23,8 @@
       center = [
         {
           type = "clock";
-          format = "%H:%M";
-          format_popup = "%m/%d/%Y %H:%M:%S";
+          format = "%I:%M %p";
+          format_popup = "%m/%d/%Y %I:%M:%S %p";
         }
       ];
       end = [

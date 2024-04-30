@@ -32,6 +32,24 @@
 
     stylix = {
       url = "github:danth/stylix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+        home-manager.follows = "home-manager";
+      };
+    };
+
+    hypridle = {
+      url = "github:hyprwm/hypridle";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    hyprlock = {
+      url = "github:hyprwm/hyprlock";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    hyprpaper = {
+      url = "github:hyprwm/hyprpaper";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
@@ -52,7 +70,7 @@
             nixos-hardware.nixosModules.framework-13th-gen-intel
             nix-index-database.nixosModules.nix-index
             home-manager.nixosModules.home-manager
-            # stylix.nixosModules.stylix
+            stylix.nixosModules.stylix
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
@@ -60,6 +78,10 @@
                 ./hm/cedar.nix
                 inputs.nix-index-database.hmModules.nix-index
                 inputs.ironbar.homeManagerModules.default
+                inputs.hypridle.homeManagerModules.default
+                inputs.hyprlock.homeManagerModules.default
+                inputs.hyprpaper.homeManagerModules.default
+                #stylix.homeManagerModules.stylix
               ];
               home-manager.extraSpecialArgs = { inherit inputs unstable; };
             }

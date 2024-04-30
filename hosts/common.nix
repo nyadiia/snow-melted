@@ -12,6 +12,8 @@
     git
     neovim
     killall
+    zip
+    unzip
   ];
   environment.variables.EDITOR = "nvim";
 

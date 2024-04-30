@@ -9,6 +9,7 @@
       github.copilot
       jnoortheen.nix-ide
       tamasfe.even-better-toml
+      rust-lang.rust-analyzer
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "everforest";
@@ -20,7 +21,7 @@
     userSettings = {
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nil";
-      "workbench.colorTheme" = "Everforest Dark";
+      #"workbench.colorTheme" = "Everforest Dark";
     };
   };
 }

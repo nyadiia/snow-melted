@@ -2,9 +2,12 @@
 {
   imports = [
     ./common.nix
+    #./stylix.nix
     ./programs/discord.nix
     ./hyprland.nix
     ./programs/vscode.nix
+    ./programs/parsec.nix
+    ./ime.nix
   ];
 
   home.sessionVariables = {
@@ -16,6 +19,8 @@
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
+    pinta
+
     light
     wluma
     pavucontrol

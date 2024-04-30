@@ -3,6 +3,8 @@
   imports = [
     ./programs/ironbar.nix
     ./programs/alacritty.nix
+    ./programs/fuzzel.nix
+    ./programs/hyprpaper.nix
   ];
 
   services = {
@@ -16,26 +18,19 @@
     cliphist.enable = true;
   };
 
-  home.pointerCursor = {
-    name = "BreezeX-RosePine-Linux";
-    package = pkgs.rose-pine-cursor;
-    size = 20;
-    x11.enable = true;
-    gtk.enable = true;
-  };
-
   home.packages = with pkgs; [
     swaynotificationcenter
     inputs.hyprland-contrib.packages.${pkgs.system}.grimblast
     hyprpicker
     wl-clipboard
+    libnotify
+    kdePackages.polkit-kde-agent-1
   ];
-
-  programs.fuzzel.enable = true;
 
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
+      debug.disable_logs = false;
       exec-once = [
         "wl-paste --type text --watch cliphist store" #Stores only text data
         "wl-paste --type image --watch cliphist store" #Stores only image data
@@ -64,6 +59,11 @@
 
       general = {
         layout = "dwindle";
+        border_size = 0;
+      };
+
+      gestures = {
+        workspace_swipe = true;
       };
 
       dwindle = {
@@ -93,12 +93,16 @@
         drop_shadow = true;
         shadow_range = 5;
         shadow_render_power = 3;
-        "col.shadow" = "rgba(34343477)";
+        #"col.shadow" = "rgba(34343477)";
 
         blur = {
           size = 2;
         };
       };
+
+      layerrule = [
+        #"dimaround, launcher"
+      ];
 
       bind = [
         "$mod, Return, exec, $term"
