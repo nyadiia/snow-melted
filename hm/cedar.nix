@@ -7,6 +7,7 @@
     ./hyprland.nix
     ./programs/vscode.nix
     ./programs/parsec.nix
+    ./programs/nautilus.nix
     ./ime.nix
   ];
 
@@ -20,11 +21,11 @@
 
   home.packages = with pkgs; [
     pinta
+    signal-desktop
 
     light
     wluma
     pavucontrol
-    iio-sensor-proxy
 
     # fonts
     noto-fonts

@@ -1,8 +1,8 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 {
   # todo replace with ibus
- i18n.inputMethod = {
-  enabled = "fcitx5";
-  fcitx5.addons = with pkgs; [ fcitx5-mozc ];
- };
+  i18n.inputMethod = {
+    enabled = "fcitx5";
+    fcitx5.addons = with pkgs; [ fcitx5-mozc ];
+  };
 }

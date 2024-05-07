@@ -1,9 +1,10 @@
 let
   wallpaper = "${../../assets/springtime_fw_bg.png}";
-in {
+in
+{
   services.hyprpaper = {
     enable = true;
-    preloads = [wallpaper];
-    wallpapers = [",${wallpaper}"];
+    preloads = [ wallpaper ];
+    wallpapers = [ ",${wallpaper}" ];
   };
 }

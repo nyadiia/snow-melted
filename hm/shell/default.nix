@@ -11,6 +11,7 @@
     '';
     shellAliases = {
       rebuild-switch = "sudo nixos-rebuild switch --flake /home/autumn/snow#cedar";
+      la = "eza la";
     };
   };
   programs.nix-index = {
@@ -24,6 +25,11 @@
   programs.starship = {
     enable = true;
     settings = pkgs.lib.importTOML ./starship.toml;
+  };
+  programs.eza = {
+    enable = true;
+    git = true;
+    icons = true;
   };
   programs.direnv = {
     enable = true;

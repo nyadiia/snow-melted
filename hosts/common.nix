@@ -14,6 +14,7 @@
     killall
     zip
     unzip
+    tealdeer
   ];
   environment.variables.EDITOR = "nvim";
 
@@ -45,11 +46,12 @@
       "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
     ];
   };
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
+  # not needed with nh
+  # nix.gc = {
+  #   automatic = true;
+  #   dates = "weekly";
+  #   options = "--delete-older-than 30d";
+  # };
 
   programs = {
     fish = {
@@ -57,6 +59,9 @@
       promptInit = ''
         ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
       '';
+      shellAliases = {
+        la = "ls -la";
+      };
     };
     gnupg.agent.enable = true;
     dconf.enable = true;
@@ -66,6 +71,12 @@
       enableFishIntegration = true;
       enableZshIntegration = false;
       enableBashIntegration = false;
+    };
+    nh = {
+      enable = true;
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 4d --keep 3";
+      flake = "/home/user/my-nixos-config";
     };
   };
 

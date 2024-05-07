@@ -38,9 +38,9 @@
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1"; # TODO: this should not be needed...
-    GTK_IM_MODULE="fcitx";
-    QT_IM_MODULE="fcitx";
-    XMODIFIERS="@im=fcitx";
+    GTK_IM_MODULE = "fcitx";
+    QT_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
   };
 
   powerManagement.powertop.enable = true;
@@ -54,6 +54,7 @@
       };
     };
   };
+  hardware.sensor.iio.enable = true;
 
   systemd.services.greetd.serviceConfig = {
     Type = "idle";

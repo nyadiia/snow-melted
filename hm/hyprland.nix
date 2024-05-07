@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, style, ... }:
 {
   imports = [
     ./programs/ironbar.nix
@@ -27,6 +27,18 @@
     kdePackages.polkit-kde-agent-1
   ];
 
+  home.pointerCursor = {
+    name = "BreezeX-RosePine-Linux";
+    package = pkgs.rose-pine-cursor;
+    size = 24;
+    x11.enable = true;
+    gtk.enable = true;
+  };
+  gtk.iconTheme = {
+    name = "Papirus";
+    package = pkgs.papirus-icon-theme;
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
@@ -43,12 +55,6 @@
         ",preferred,auto,auto"
       ];
       misc.vfr = true;
-
-      "$mod" = "SUPER";
-      "$term" = "alacritty";
-      "$runner" = "fuzzel";
-      "$cliphist" = "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy";
-      "$colorpicker" = "hyprpicker -a";
 
       input = {
         kb_layout = "us";
@@ -93,7 +99,7 @@
         drop_shadow = true;
         shadow_range = 5;
         shadow_render_power = 3;
-        #"col.shadow" = "rgba(34343477)";
+        "col.shadow" = "rgba(34343477)";
 
         blur = {
           size = 2;
@@ -104,15 +110,22 @@
         #"dimaround, launcher"
       ];
 
+      "$mod" = "SUPER";
+      "$term" = "alacritty";
+      "$runner" = "fuzzel";
+      "$cliphist" = "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy && wl-paste";
+      "$colorpicker" = "hyprpicker -a";
+
       bind = [
-        "$mod, Return, exec, $term"
-        "$mod SHIFT, Q, killactive"
-        "$mod, D, exec, $runner"
-        "$mod, V, exec, $cliphist"
-        ", Print, exec, grimblast copy area"
-        "$mod, Print, exec, grimblast copy screen"
-        "$mod, F, fullscreen"
-        "$mod SHIFT, C, exec, $colorpicker"
+        "$mod, Return, exec, $term"                # win + enter: open terminal
+        "$mod SHIFT, Q, killactive"                # win + shift + q: close focused window
+        "$mod, D, exec, $runner"                   # win + d: open application launcher
+        "$mod, V, exec, $cliphist"                 # win + v: open clipboard history
+        ", Print, exec, grimblast copy area"       # printsc: copy area
+        "$mod, Print, exec, grimblast copy screen" # win + printsc: copy screen
+        "$mod, F, fullscreen"                      # win + f: toggle fullscreen
+        "$mod SHIFT, C, exec, $colorpicker"        # win + shift + c: open color picker
+        "$mod, T, exec, swaync-client -t"          # win + t: togglet notification center
       ] ++ (
         # workspaces
         # binds $mod + [ shift + ] {1..10} to [move to] workspace {1..10}

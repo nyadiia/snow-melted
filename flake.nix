@@ -30,14 +30,6 @@
 
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
 
-    stylix = {
-      url = "github:danth/stylix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
-        home-manager.follows = "home-manager";
-      };
-    };
-
     hypridle = {
       url = "github:hyprwm/hypridle";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -54,23 +46,23 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, nix-index-database, nix-vscode-extensions, stylix, ... }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, nix-index-database, nix-vscode-extensions, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; config = { allowUnfree = true; }; };
       unstable = import nixpkgs-unstable { inherit system; config = { allowUnfree = true; }; };
+      style = import ./style/default.nix;
     in
     {
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
       nixosConfigurations = {
         cedar = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs unstable; };
+          specialArgs = { inherit inputs unstable style; };
           modules = [
             ./hosts/cedar
             nixos-hardware.nixosModules.framework-13th-gen-intel
             nix-index-database.nixosModules.nix-index
             home-manager.nixosModules.home-manager
-            stylix.nixosModules.stylix
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
@@ -81,9 +73,8 @@
                 inputs.hypridle.homeManagerModules.default
                 inputs.hyprlock.homeManagerModules.default
                 inputs.hyprpaper.homeManagerModules.default
-                #stylix.homeManagerModules.stylix
               ];
-              home-manager.extraSpecialArgs = { inherit inputs unstable; };
+              home-manager.extraSpecialArgs = { inherit inputs unstable style; };
             }
           ];
         };

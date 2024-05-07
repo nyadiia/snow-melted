@@ -1,33 +1,40 @@
-{ pkgs, ... }:
+{ pkgs, style, ... }:
+let
+  hexed = builtins.mapAttrs (name: color: "#" + color);
+in
 {
   programs.alacritty = {
     enable = true;
     settings = {
-      colors = {
-        primary = {
-          background = "#272e33";
-          foreground = "#d3c6aa";
-        };
-        normal = {
-          black = "#414b50";
-          red = "#e67e80";
-          green = "#a7c080";
-          yellow = "#dbbc7f";
-          blue = "#7fbbb3";
-          magenta = "#d699b6";
-          cyan = "#83c092";
-          white = "#d3c6aa";
-        };
-        bright = {
-          black = "#475258";
-          red = "#e67e80";
-          green = "#a7c080";
-          yellow = "#dbbc7f";
-          blue = "#7fbbb3";
-          magenta = "#d699b6";
-          cyan = "#83c092";
-          white = "#d3c6aa";
-        };
+      colors = with style.colors.terminal.light; {
+        primary = hexed ({
+          background = background;
+          foreground = foreground;
+        });
+        normal = hexed (with dim; {
+          inherit 
+            red
+            green
+            yellow
+            blue
+            magenta
+            cyan
+          ;
+          black = background;
+          white = gray;
+        });
+        bright = hexed (with bright; {
+          inherit 
+            red
+            green
+            yellow
+            blue
+            magenta
+            cyan
+          ;
+          black = gray;
+          white = foreground;
+        });
       };
     };
   };
