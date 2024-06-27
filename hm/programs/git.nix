@@ -7,5 +7,8 @@
       key = "E1542373839B2670";
       signByDefault = true;
     };
+    extraConfig = {
+      init.defaultBranch = "main";
+    };
   };
 }

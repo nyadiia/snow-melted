@@ -4,7 +4,9 @@ in
 {
   services.hyprpaper = {
     enable = true;
-    preloads = [ wallpaper ];
-    wallpapers = [ ",${wallpaper}" ];
+    settings = {
+      preload = [ wallpaper ];
+      wallpaper = [ ",${wallpaper}" ];
+    };
   };
 }

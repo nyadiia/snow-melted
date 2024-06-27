@@ -51,7 +51,7 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; config = { allowUnfree = true; }; };
       unstable = import nixpkgs-unstable { inherit system; config = { allowUnfree = true; }; };
-      style = import ./style/default.nix;
+      style = import ./style/default.nix { inherit pkgs; };
     in
     {
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
@@ -70,9 +70,6 @@
                 ./hm/cedar.nix
                 inputs.nix-index-database.hmModules.nix-index
                 inputs.ironbar.homeManagerModules.default
-                inputs.hypridle.homeManagerModules.default
-                inputs.hyprlock.homeManagerModules.default
-                inputs.hyprpaper.homeManagerModules.default
               ];
               home-manager.extraSpecialArgs = { inherit inputs unstable style; };
             }

@@ -1,5 +1,8 @@
 { pkgs, ... }:
 {
+  imports = [
+    ./vscode/theme.nix
+  ];
   home.packages = with pkgs; [
     nil
   ];
@@ -10,18 +13,13 @@
       jnoortheen.nix-ide
       tamasfe.even-better-toml
       rust-lang.rust-analyzer
-    ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-      {
-        name = "everforest";
-        publisher = "sainnhe";
-        version = "0.3.0";
-        sha256 = "nZirzVvM160ZTpBLTimL2X35sIGy5j2LQOok7a2Yc7U=";
-      }
+      ms-azuretools.vscode-docker
+      github.copilot-chat
     ];
     userSettings = {
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nil";
-      #"workbench.colorTheme" = "Everforest Dark";
+      "workbench.colorTheme" = "Autumn Material Light";
     };
   };
 }

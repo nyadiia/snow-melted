@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, style, ... }:
 {
   imports = [
     ./common.nix
@@ -19,7 +19,7 @@
 
   fonts.fontconfig.enable = true;
 
-  home.packages = with pkgs; [
+  home.packages = style.fonts.font-packages ++ (with pkgs; [
     pinta
     signal-desktop
 
@@ -31,7 +31,7 @@
     noto-fonts
     noto-fonts-cjk
     inter
-    roboto
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
-  ];
+
+    obsidian
+  ]);
 }

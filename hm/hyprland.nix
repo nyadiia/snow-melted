@@ -5,6 +5,9 @@
     ./programs/alacritty.nix
     ./programs/fuzzel.nix
     ./programs/hyprpaper.nix
+    ./gtk.nix
+    ./swaync
+    ./programs/hyprlock.nix
   ];
 
   services = {
@@ -19,7 +22,6 @@
   };
 
   home.packages = with pkgs; [
-    swaynotificationcenter
     inputs.hyprland-contrib.packages.${pkgs.system}.grimblast
     hyprpicker
     wl-clipboard
@@ -30,14 +32,11 @@
   home.pointerCursor = {
     name = "BreezeX-RosePine-Linux";
     package = pkgs.rose-pine-cursor;
-    size = 24;
+    size = 32;
     x11.enable = true;
     gtk.enable = true;
   };
-  gtk.iconTheme = {
-    name = "Papirus";
-    package = pkgs.papirus-icon-theme;
-  };
+  qt.style.name = "adwaita";
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -47,7 +46,6 @@
         "wl-paste --type text --watch cliphist store" #Stores only text data
         "wl-paste --type image --watch cliphist store" #Stores only image data
         "ironbar &"
-        "swaync &"
       ];
       monitor = [
         "eDP-1,preferred,auto,1.175"
@@ -102,6 +100,7 @@
         "col.shadow" = "rgba(34343477)";
 
         blur = {
+          enabled = false;
           size = 2;
         };
       };
@@ -117,15 +116,16 @@
       "$colorpicker" = "hyprpicker -a";
 
       bind = [
-        "$mod, Return, exec, $term"                # win + enter: open terminal
-        "$mod SHIFT, Q, killactive"                # win + shift + q: close focused window
-        "$mod, D, exec, $runner"                   # win + d: open application launcher
-        "$mod, V, exec, $cliphist"                 # win + v: open clipboard history
-        ", Print, exec, grimblast copy area"       # printsc: copy area
+        "$mod, Return, exec, $term" # win + enter: open terminal
+        "$mod SHIFT, Q, killactive" # win + shift + q: close focused window
+        "$mod, D, exec, $runner" # win + d: open application launcher
+        "$mod, V, exec, $cliphist" # win + v: open clipboard history
+        ", Print, exec, grimblast copy area" # printsc: copy area
         "$mod, Print, exec, grimblast copy screen" # win + printsc: copy screen
-        "$mod, F, fullscreen"                      # win + f: toggle fullscreen
-        "$mod SHIFT, C, exec, $colorpicker"        # win + shift + c: open color picker
-        "$mod, T, exec, swaync-client -t"          # win + t: togglet notification center
+        "$mod, F, fullscreen" # win + f: toggle fullscreen
+        "$mod SHIFT, C, exec, $colorpicker" # win + shift + c: open color picker
+        "$mod, T, exec, swaync-client -t" # win + t: togglet notification center
+        "$mod, L, exec, hyprlock" # win + l: lock screen
       ] ++ (
         # workspaces
         # binds $mod + [ shift + ] {1..10} to [move to] workspace {1..10}

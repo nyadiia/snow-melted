@@ -12,26 +12,26 @@ in
           foreground = foreground;
         });
         normal = hexed (with dim; {
-          inherit 
+          inherit
             red
             green
             yellow
             blue
             magenta
             cyan
-          ;
+            ;
           black = background;
           white = gray;
         });
         bright = hexed (with bright; {
-          inherit 
+          inherit
             red
             green
             yellow
             blue
             magenta
             cyan
-          ;
+            ;
           black = gray;
           white = foreground;
         });

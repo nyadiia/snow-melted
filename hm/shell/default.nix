@@ -10,8 +10,8 @@
       ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
     '';
     shellAliases = {
-      rebuild-switch = "sudo nixos-rebuild switch --flake /home/autumn/snow#cedar";
       la = "eza la";
+      c = "code . && exit";
     };
   };
   programs.nix-index = {
