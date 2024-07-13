@@ -56,7 +56,8 @@
   };
   hardware.sensor.iio.enable = true;
 
-  
+  # in a beautiful pure and true world steam would exist in hm
+  programs.steam.enable = true;
 
   services = {
     greetd = {
