@@ -24,14 +24,27 @@
   };
 
   # see nixos-hardware
-  hardware.raspberry-pi."4" = {
-    # NixOS/nixos-hardware#703
-    # audio.enable = true;
-    bluetooth.enable = true;
-    fkms-3d.enable = true;
+  hardware = {
+    deviceTree = {
+      enable = true;
+      filter = "*rpi-4-*.dtb";
+    };
+
+    raspberry-pi."4" = {
+      # NixOS/nixos-hardware#703
+      # audio.enable = true;
+      bluetooth.enable = true;
+      fkms-3d.enable = true;
+      apply-overlays-dtmerge.enable = true;
+    };
+
+    pulseaudio.enable = lib.mkForce false;
   };
 
-  hardware.pulseaudio.enable = lib.mkForce false;
+  environment.systemPackages = with pkgs; [
+    libraspberrypi
+    raspberrypi-eeprom
+  ];
 
   services = {
     # isn't it funny that this is called xserver, but i'm running wayland
