@@ -28,7 +28,7 @@
 
   # see nixos-hardware
   hardware.raspberry-pi."4" = {
-    audio.enable = true;
+    #audio.enable = true;
     bluetooth.enable = true;
   };
 
