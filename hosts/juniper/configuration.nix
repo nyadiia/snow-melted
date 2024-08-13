@@ -12,6 +12,7 @@
     ];
   };
 
+  home-manager.backupFileExtension = ".bak";
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
@@ -59,6 +60,11 @@
         wayland = true;
       };
       desktopManager.gnome.enable = true;
+    };
+    openssh = {
+      enable = true;
+      settings.PasswordAuthentication = false;
+      settings.KbdInteractiveAuthentication = false;
     };
     pipewire = {
       enable = true;
