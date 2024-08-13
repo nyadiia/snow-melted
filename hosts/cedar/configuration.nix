@@ -29,7 +29,12 @@
   };
 
   users.users.autumn = {
-    extraGroups = [ "networkmanager" "video" "wheel" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "video"
+      "wheel"
+      "docker"
+    ];
   };
 
   # must enable wm outside of hm
@@ -78,6 +83,16 @@
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
+      wireplumber = {
+        enable = true;
+	    extraConfig = {
+	      "10-disable-camera" = {
+		"wireplumber.profiles" = {
+		  main."monitor.libcamera" = "disabled";
+		};
+	      };
+	    };
+      };
     };
     gvfs.enable = true;
     tumbler.enable = true;
@@ -100,10 +115,12 @@
   ];
 
   systemd.services =
-    let hibernateEnvironment = {
-      HIBERNATE_SECONDS = "3600";
-      HIBERNATE_LOCK = "/var/run/autohibernate.lock";
-    }; in
+    let
+      hibernateEnvironment = {
+        HIBERNATE_SECONDS = "3600";
+        HIBERNATE_LOCK = "/var/run/autohibernate.lock";
+      };
+    in
     {
       greetd.serviceConfig = {
         Type = "idle";

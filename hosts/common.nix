@@ -1,7 +1,7 @@
 # common configuration for all systems
 # anything you want to be assumed to be installed should be in here!
 
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   # enable networking
   networking.networkmanager.enable = true;
@@ -15,6 +15,7 @@
     zip
     unzip
     tealdeer
+    tailscale
   ];
   environment.variables.EDITOR = "nvim";
 
@@ -22,7 +23,10 @@
   users.users.autumn = {
     isNormalUser = true;
     description = "Autumn";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     # for systems that don't use home-manager (like servers)
     shell = pkgs.fish;
   };
@@ -30,18 +34,19 @@
   # nix settings
   nixpkgs.config.allowUnfree = true;
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     builders-use-substitutes = true;
     substituters = [
       "https://hyprland.cachix.org"
-      "https://anyrun.cachix.org"
       "https://walker.cachix.org"
       "https://cache.garnix.io"
     ];
 
     trusted-public-keys = [
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-      "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
       "walker.cachix.org-1:fG8q+uAaMqhsMxWjwvk0IMb4mFPFLqHjuvfwQxE4oJM="
       "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
     ];
@@ -80,6 +85,9 @@
     };
   };
 
+  # tailscale
+  services.tailscale.enable = true;
+  networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
 
   # i18n
   i18n = {

@@ -44,9 +44,14 @@
       url = "github:hyprwm/hyprpaper";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, nix-index-database, nix-vscode-extensions, ... }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, nix-index-database, nix-vscode-extensions, agenix, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; config = { allowUnfree = true; }; };
@@ -63,6 +68,12 @@
             nixos-hardware.nixosModules.framework-13th-gen-intel
             nix-index-database.nixosModules.nix-index
             home-manager.nixosModules.home-manager
+            agenix.nixosModules.default
+            {
+              environment.systemPackages = [
+                agenix.packages.${system}.default
+              ];
+            }
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;

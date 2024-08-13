@@ -23,6 +23,8 @@
     pinta
     signal-desktop
 
+    spotify
+
     light
     wluma
     pavucontrol

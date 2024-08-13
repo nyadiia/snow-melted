@@ -15,6 +15,7 @@
       rust-lang.rust-analyzer
       ms-azuretools.vscode-docker
       github.copilot-chat
+      vue.volar
     ];
     userSettings = {
       "nix.enableLanguageServer" = true;
