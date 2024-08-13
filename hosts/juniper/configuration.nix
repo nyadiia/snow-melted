@@ -28,7 +28,6 @@
   hardware = {
     deviceTree = {
       enable = true;
-      filter = "*rpi-4-*.dtb";
     };
 
     raspberry-pi."4" = {
