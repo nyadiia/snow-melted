@@ -53,19 +53,18 @@
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, nix-index-database, nix-vscode-extensions, agenix, ... }:
     let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; config = { allowUnfree = true; }; };
-      unstable = import nixpkgs-unstable { inherit system; config = { allowUnfree = true; }; };
-      style = import ./style/default.nix { inherit pkgs; };
-    in
-    {
-      formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
-      nixosConfigurations = {
-        cedar = nixpkgs.lib.nixosSystem {
+      mkSystem = system: name: hardware: let 
+        pkgs = import nixpkgs { inherit system; config = { allowUnfree = true; }; };
+        unstable = import nixpkgs-unstable { inherit system; config = { allowUnfree = true; }; };
+        style = import ./style/default.nix { inherit pkgs; };
+        nixosConfig = ./. + "/hosts/${name}";
+        hmConfig = ./. + "/hm/${name}.nix";
+      in
+        nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs unstable style; };
           modules = [
-            ./hosts/cedar
-            nixos-hardware.nixosModules.framework-13th-gen-intel
+            nixosConfig
+            hardware
             nix-index-database.nixosModules.nix-index
             home-manager.nixosModules.home-manager
             agenix.nixosModules.default
@@ -78,7 +77,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.autumn.imports = [
-                ./hm/cedar.nix
+                hmConfig
                 inputs.nix-index-database.hmModules.nix-index
                 inputs.ironbar.homeManagerModules.default
               ];
@@ -86,6 +85,12 @@
             }
           ];
         };
+    in
+    {
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x84_64-linux.nixpkgs-fmt;
+      formatter.aarch64-linux = nixpkgs.legacyPackages.aarch64-linux.nixpkgs-fmt;
+      nixosConfigurations = {
+        cedar = mkSystem "x86_64-linux" "cedar" nixos-hardware.nixosModules.framework-13th-gen-intel;
       };
     };
 }
