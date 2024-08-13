@@ -28,6 +28,7 @@
     # NixOS/nixos-hardware#703
     # audio.enable = true;
     bluetooth.enable = true;
+    fkms-3d.enable = true;
   };
 
   hardware.pulseaudio.enable = lib.mkForce false;
