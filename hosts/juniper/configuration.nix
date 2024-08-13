@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -28,9 +28,11 @@
 
   # see nixos-hardware
   hardware.raspberry-pi."4" = {
-    #audio.enable = true;
+    audio.enable = true;
     bluetooth.enable = true;
   };
+
+  hardware.pulseaudio.enable = lib.mkForce false;
 
   services = {
     # isn't it funny that this is called xserver, but i'm running wayland
