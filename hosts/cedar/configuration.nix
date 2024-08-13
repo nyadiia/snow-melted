@@ -85,13 +85,13 @@
       pulse.enable = true;
       wireplumber = {
         enable = true;
-	    extraConfig = {
-	      "10-disable-camera" = {
-		"wireplumber.profiles" = {
-		  main."monitor.libcamera" = "disabled";
-		};
-	      };
-	    };
+        extraConfig = {
+          "10-disable-camera" = {
+            "wireplumber.profiles" = {
+              main."monitor.libcamera" = "disabled";
+            };
+          };
+        };
       };
     };
     gvfs.enable = true;

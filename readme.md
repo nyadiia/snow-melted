@@ -35,3 +35,7 @@ framework 13 (13th gen intel), named after the [northern white-cedar](https://en
 
 
 </details>
+
+### juniper
+
+raspberry pi 4, named after the [eastern juniper](https://en.wikipedia.org/wiki/Juniperus_virginiana)
