@@ -1,8 +1,5 @@
 { pkgs, lib, ... }:
 {
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
   networking.hostName = "juniper";
 
   time.timeZone = "America/Chicago";
