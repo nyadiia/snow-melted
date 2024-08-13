@@ -7,11 +7,6 @@
 
   time.timeZone = "America/Chicago";
 
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
   users.users.autumn = {
     extraGroups = [
       "networkmanager"
@@ -41,6 +36,10 @@
     # isn't it funny that this is called xserver, but i'm running wayland
     xserver = {
       enable = true;
+      xkb = {
+        layout = "us";
+        variant = "";
+      };
       displayManager.gdm = {
         enable = true;
         wayland = true;
