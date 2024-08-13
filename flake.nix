@@ -91,7 +91,7 @@
       formatter.aarch64-linux = nixpkgs.legacyPackages.aarch64-linux.nixpkgs-fmt;
       nixosConfigurations = {
         cedar = mkSystem "x86_64-linux" "cedar" nixos-hardware.nixosModules.framework-13th-gen-intel;
-        juniper = mkSystem "aarh64-linux" "juniper" nixos-hardware.nixosModules.raspberry-pi-4;
+        juniper = mkSystem "aarch64-linux" "juniper" nixos-hardware.nixosModules.raspberry-pi-4;
       };
     };
 }
