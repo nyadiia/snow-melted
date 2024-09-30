@@ -40,6 +40,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     settings = {
       # debug.disable_logs = false;
       exec-once = [
@@ -51,6 +52,7 @@
         "eDP-1,preferred,auto,1.175"
         #"eDP-1,addreserved,40,0,0,0"
         ",preferred,auto,auto"
+        "desc:LG Electronics LG TV SSCR2 0x01010101,preferred,auto,2"
       ];
       misc.vfr = true;
 
@@ -93,9 +95,10 @@
 
       decoration = {
         rounding = 10;
-        inactive_opacity = 0.9;
         drop_shadow = true;
-        shadow_range = 5;
+        dim_inactive = true;
+        dim_strength = 0.05;
+        shadow_range = 4;
         shadow_render_power = 3;
         "col.shadow" = "rgba(34343477)";
 
@@ -107,6 +110,10 @@
 
       layerrule = [
         #"dimaround, launcher"
+      ];
+
+      windowrulev2 = [
+        "nodim,fullscreen:1"
       ];
 
       "$mod" = "SUPER";

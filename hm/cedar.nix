@@ -9,6 +9,7 @@
     ./programs/parsec.nix
     ./programs/nautilus.nix
     ./ime.nix
+    ./xcompose.nix
   ];
 
   home.sessionVariables = {
@@ -34,6 +35,9 @@
     noto-fonts-cjk
     inter
 
+    fira
+
     obsidian
+    inkscape
   ]);
 }

@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   # bootloader
@@ -39,7 +39,10 @@
 
   # must enable wm outside of hm
   # otherwise you cant login into it
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+  };
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1"; # TODO: this should not be needed...

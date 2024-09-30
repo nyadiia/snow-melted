@@ -31,6 +31,12 @@
     shell = pkgs.fish;
   };
 
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false;
+    settings.KbdInteractiveAuthentication = false;
+  };
+
   # nix settings
   nixpkgs.config.allowUnfree = true;
   nix.settings = {

@@ -60,11 +60,6 @@
       };
       desktopManager.gnome.enable = true;
     };
-    openssh = {
-      enable = true;
-      settings.PasswordAuthentication = false;
-      settings.KbdInteractiveAuthentication = false;
-    };
     pipewire = {
       enable = true;
       alsa.enable = true;

@@ -35,6 +35,8 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+
     hyprlock = {
       url = "github:hyprwm/hyprlock";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -51,7 +53,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, nix-index-database, nix-vscode-extensions, agenix, ... }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, nix-index-database, nix-vscode-extensions, agenix, hyprland, ... }:
     let
       mkSystem = system: name: hardware: let 
         pkgs = import nixpkgs { inherit system; config = { allowUnfree = true; }; };
@@ -60,8 +62,8 @@
         nixosConfig = ./. + "/hosts/${name}";
         hmConfig = ./. + "/hm/${name}.nix";
       in
-        nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs unstable style; };
+        nixpkgs.lib.nixosSystem rec {
+          specialArgs = { inherit inputs unstable style hyprland; };
           modules = [
             nixosConfig
             hardware
@@ -81,7 +83,7 @@
                 inputs.nix-index-database.hmModules.nix-index
                 inputs.ironbar.homeManagerModules.default
               ];
-              home-manager.extraSpecialArgs = { inherit inputs unstable style; };
+              home-manager.extraSpecialArgs = specialArgs;
             }
           ];
         };
@@ -92,6 +94,7 @@
       nixosConfigurations = {
         cedar = mkSystem "x86_64-linux" "cedar" nixos-hardware.nixosModules.framework-13th-gen-intel;
         juniper = mkSystem "aarch64-linux" "juniper" nixos-hardware.nixosModules.raspberry-pi-4;
+        birch = mkSystem "x86_64-linux" "birch" nixos-hardware.nixosModules.lenovo-thinkpad-t440p;
       };
     };
 }
