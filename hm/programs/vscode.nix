@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   imports = [
     ./vscode/theme.nix
@@ -9,6 +9,7 @@
   ];
   programs.vscode = {
     enable = true;
+    mutableExtensionsDir = false;
     extensions = with pkgs.vscode-extensions; [
       github.copilot
       jnoortheen.nix-ide
@@ -34,6 +35,18 @@
         publisher = "ms-vscode";
         version = "0.5.2024062701";
         sha256 = "sha256-03UXPaoW7DpApaLFJyZRdTKfCDbXudglFC7Dwj4w8yo=";
+      }
+      {
+        name = "unocss";
+        publisher = "antfu";
+        version = "0.63.1";
+        sha256 = "sha256-QgP3ZjR+m+pfUJqGxYOq2n7j182+dNKlyzcWDOSiUDs=";
+      }
+      {
+        name = "css-nesting-syntax-highlighting";
+	publisher = "jacobcassidy";
+	version = "0.1.1";
+	sha256 = "sha256-bCrS0ezkGtXuNe2j5EoHAnwbBHkKBH/VIjX4+5qoplQ=";
       }
     ];
     userSettings = {
