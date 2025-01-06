@@ -1,6 +1,6 @@
 {
-    "name": "autumn-material",
-    "displayName": "Autumn Material",
+    "name": "nyadiia-material",
+    "displayName": "nyadiia Material",
     "version": "0.0.0",
     "publisher": "auctumnus",
     "description": "Theme configured via NixOS or Home Manager.",
@@ -10,7 +10,7 @@
     },
     "contributes": {
       "themes": [{
-        "label": "Autumn Material Light",
+        "label": "nyadiia Material Light",
         "uiTheme": "vs",
         "path": "./themes/material-light.json"
       }]

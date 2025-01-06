@@ -2,9 +2,9 @@
 let
   light-theme = style.interpolate-theme ./theme-light.mustache;
   dark-theme = style.interpolate-theme ./theme-dark.mustache;
-  theme-extension = pkgs.runCommandLocal "autumn-material"
+  theme-extension = pkgs.runCommandLocal "nyadiia-material"
     {
-      vscodeExtUniqueId = "autumn.material";
+      vscodeExtUniqueId = "nyadiia.material";
       vscodeExtPublisher = "auctumnus";
       version = "0.0.1";
     } ''
@@ -18,7 +18,7 @@ in
   programs.vscode = {
     extensions = [ theme-extension ];
     userSettings = {
-      "workbench.colorTheme" = "Autumn Material Light";
+      "workbench.colorTheme" = "nyadiia Material Light";
       "terminal.integrated.fontFamily" = style.fonts.monospace.name;
       "editor.fontFamily" = style.fonts.monospace.name;
     };

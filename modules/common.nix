@@ -5,6 +5,8 @@
 {
   # enable networking
   networking.networkmanager.enable = true;
+  systemd.services.NetworkManager-wait-online.enable = false;
+
 
   # common packages
   # most things should be in home-manager, this is for system packages 
@@ -15,14 +17,19 @@
     zip
     unzip
     tealdeer
-    tailscale
+    fd
+    btop
+    tmux
+    wget
+    curl
+    ripgrep
   ];
   environment.variables.EDITOR = "nvim";
 
   # default user account
-  users.users.autumn = {
+  users.users.nyadiia = {
     isNormalUser = true;
-    description = "Autumn";
+    description = "nyadiia";
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -31,10 +38,28 @@
     shell = pkgs.fish;
   };
 
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
-    settings.KbdInteractiveAuthentication = false;
+  virtualisation = {
+    docker = {
+      enable = true;
+      enableOnBoot = true;
+    };
+    # Enable virtualization
+    libvirtd.enable = true;
+    spiceUSBRedirection.enable = true;
+  };
+
+  services = {
+    chrony.enable = true;
+    openssh = {
+      enable = true;
+      settings.PasswordAuthentication = false;
+      settings.KbdInteractiveAuthentication = false;
+    };
+    tailscale = {
+      enable = true;
+      openFirewall = true;
+    };
+    system76-scheduler.enable = true;
   };
 
   # nix settings
@@ -46,30 +71,17 @@
     ];
     builders-use-substitutes = true;
     substituters = [
-      "https://hyprland.cachix.org"
-      "https://walker.cachix.org"
       "https://cache.garnix.io"
     ];
 
     trusted-public-keys = [
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-      "walker.cachix.org-1:fG8q+uAaMqhsMxWjwvk0IMb4mFPFLqHjuvfwQxE4oJM="
       "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
     ];
   };
-  # not needed with nh
-  # nix.gc = {
-  #   automatic = true;
-  #   dates = "weekly";
-  #   options = "--delete-older-than 30d";
-  # };
 
   programs = {
     fish = {
       enable = true;
-      promptInit = ''
-        ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
-      '';
       shellAliases = {
         la = "ls -la";
       };
@@ -77,23 +89,15 @@
     gnupg.agent.enable = true;
     dconf.enable = true;
     command-not-found.enable = false;
-    nix-index = {
-      enable = true;
-      enableFishIntegration = true;
-      enableZshIntegration = false;
-      enableBashIntegration = false;
-    };
+    nix-index.enable = true;
     nh = {
       enable = true;
       clean.enable = true;
-      clean.extraArgs = "--keep-since 7d --keep 3";
-      flake = "/home/autumn/snow";
+      clean.extraArgs = "--keep-since 7d --keep 3 --nogcroots";
+      flake = "/home/nyadiia/snow";
     };
   };
 
-  # tailscale
-  services.tailscale.enable = true;
-  networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
 
   # i18n
   i18n = {

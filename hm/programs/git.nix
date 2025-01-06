@@ -1,10 +1,10 @@
 {
   programs.git = {
     enable = true;
-    userEmail = "auctumnus@pm.me";
-    userName = "Autumn";
+    userEmail = "nyadiia@pm.me";
+    userName = "nyadiia";
     signing = {
-      key = "E1542373839B2670";
+      key = "";
       signByDefault = true;
     };
     extraConfig = {

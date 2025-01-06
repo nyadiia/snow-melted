@@ -6,11 +6,9 @@
       set fish_greeting
       starship init fish | source
     '';
-    shellInit = ''
-      ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
-    '';
     shellAliases = {
       la = "eza la";
+      code = "codium";
       c = "code . && exit";
     };
   };

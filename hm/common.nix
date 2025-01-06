@@ -7,8 +7,8 @@
     ./programs/gpg.nix
   ];
 
-  home.username = "autumn";
-  home.homeDirectory = "/home/autumn";
+  home.username = "nyadiia";
+  home.homeDirectory = "/home/nyadiia";
 
   systemd.user.startServices = "sd-switch";
   home = {
@@ -16,13 +16,13 @@
   };
   programs.home-manager.enable = true;
 
-  xdg.userDirs = {
-    enable = true;
-    music = "${config.home.homeDirectory}/music";
-    pictures = "${config.home.homeDirectory}/pictures";
-    videos = "${config.home.homeDirectory}/videos";
-    download = "${config.home.homeDirectory}/downloads";
-    documents = "${config.home.homeDirectory}/documents";
-    publicShare = "${config.home.homeDirectory}/public";
-  };
+  # xdg.userDirs = {
+  #   enable = true;
+  #   music = "${config.home.homeDirectory}/music";
+  #   pictures = "${config.home.homeDirectory}/pictures";
+  #   videos = "${config.home.homeDirectory}/videos";
+  #   download = "${config.home.homeDirectory}/downloads";
+  #   documents = "${config.home.homeDirectory}/documents";
+  #   publicShare = "${config.home.homeDirectory}/public";
+  # };
 }

@@ -10,6 +10,7 @@
   programs.vscode = {
     enable = true;
     mutableExtensionsDir = false;
+    package = pkgs.vscodium;
     extensions = with pkgs.vscode-extensions; [
       github.copilot
       jnoortheen.nix-ide
@@ -44,15 +45,14 @@
       }
       {
         name = "css-nesting-syntax-highlighting";
-	publisher = "jacobcassidy";
-	version = "0.1.1";
-	sha256 = "sha256-bCrS0ezkGtXuNe2j5EoHAnwbBHkKBH/VIjX4+5qoplQ=";
+        publisher = "jacobcassidy";
+        version = "0.1.1";
+        sha256 = "sha256-bCrS0ezkGtXuNe2j5EoHAnwbBHkKBH/VIjX4+5qoplQ=";
       }
     ];
     userSettings = {
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nil";
-      "workbench.colorTheme" = "Autumn Material Light";
     };
   };
 }

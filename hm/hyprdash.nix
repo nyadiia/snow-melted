@@ -2,7 +2,7 @@
 {
   imports = [
     ./common.nix
-    #./stylix.nix
+    ./gnome.nix
     ./programs/discord.nix
     ./hyprland.nix
     ./programs/vscode.nix
@@ -21,7 +21,6 @@
   fonts.fontconfig.enable = true;
 
   home.packages = style.fonts.font-packages ++ (with pkgs; [
-    pinta
     signal-desktop
 
     spotify
