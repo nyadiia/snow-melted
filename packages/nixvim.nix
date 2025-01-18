@@ -116,7 +116,7 @@
     coq-thirdparty.enable = true;
     floaterm = {
       enable = true;
-      keymaps.toggle = "<F7>";
+      settings.keymap_toggle = "<F7>";
     };
     gitsigns.enable = true;
     lsp-format.enable = false;
@@ -129,10 +129,7 @@
     telescope.enable = true;
     treesitter = {
       enable = true;
-      settings = {
-        auto_install = true;
-        grammerPackages = [ pkgs.tree-sitter-grammars.tree-sitter-nu ];
-      };
+      settings.auto_install = true;
       nixvimInjections = false;
     };
     trouble.enable = true;
@@ -154,7 +151,7 @@
           cargoPackage = pkgs.cargo;
         };
         ts_ls.enable = true;
-        typst_lsp.enable = true;
+        tinymist.enable = true;
       };
     };
   };

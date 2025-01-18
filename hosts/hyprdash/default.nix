@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -7,7 +7,18 @@
   networking.hostName = "hyprdash";
   time.timeZone = "America/Chicago";
 
-  services.
+  environment = {
+    systemPackages = with pkgs; [
+      sbctl
+      gparted
+    ];
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1"; # TODO: this should not be needed...
+      GTK_IM_MODULE = "fcitx";
+      QT_IM_MODULE = "fcitx";
+      XMODIFIERS = "@im=fcitx";
+    };
+  };
 
   security = {
     polkit.enable = true;
@@ -37,31 +48,29 @@
   # must enable wm outside of hm
   # otherwise you cant login into it
   programs = {
+    virt-manager.enable = true;
+    ssh.startAgent = false;
     steam.enable = true;
     gnupg = {
+      agent.enable = true;
       agent.enableSSHSupport = true;
     };
   };
 
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1"; # TODO: this should not be needed...
-    GTK_IM_MODULE = "fcitx";
-    QT_IM_MODULE = "fcitx";
-    XMODIFIERS = "@im=fcitx";
-  };
-
   powerManagement.powertop.enable = true;
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-    settings = {
-      General = {
-        Enable = "Source,Sink,Media,Socket";
-        Experimental = true;
+  hardware = {
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+          Experimental = true;
+        };
       };
     };
+    sensor.iio.enable = true;
   };
-  hardware.sensor.iio.enable = true;
 
   services = {
     xserver = {
@@ -69,8 +78,9 @@
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
       xkb = {
-      layout = "us";
-      variant = "";
+        layout = "us";
+        variant = "";
+        options = "terminate:ctrl_alt_bksp,compose:caps";
       };
     };
     gnome.sushi.enable = true;
@@ -100,7 +110,7 @@
     tumbler.enable = true;
     psd.enable = true;
     tlp = {
-      enable = true;
+      enable = false;
       settings = {
         CPU_BOOST_ON_BAT = 0;
         CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
@@ -114,6 +124,11 @@
   boot.kernelParams = [
     "nowatchdog"
   ];
+
+  systemd.sleep.extraConfig = ''
+    HibernateDelaySec=60min
+  '';
+  services.logind.lidSwitch = "suspend-then-hibernate";
 
   systemd.services =
     let

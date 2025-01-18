@@ -7,6 +7,11 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     systems.url = "github:nix-systems/default";
 
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,21 +27,29 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     matugen.url = "github:InioX/Matugen";
+    apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
   };
 
   outputs =
     inputs@{
       self,
       nixpkgs,
-      nixpkgs-unstable,
       home-manager,
       nixos-hardware,
       nix-index-database,
       nix-vscode-extensions,
       matugen,
       systems,
+      nixvim,
+      apple-fonts,
+      lanzaboote,
       ...
     }:
 
@@ -44,22 +57,27 @@
       eachSystem =
         function: nixpkgs.lib.genAttrs (import systems) (system: function nixpkgs.legacyPackages.${system});
 
-      mkSystem = 
-      { system ? "x86_64-linux", name, hardware ? "" }:
-      let 
-        config = {
-          allowUnfree = true;
-        };
-        pkgs = import nixpkgs { inherit system config; };
-        style = import ./style { inherit pkgs; };
-        nixosConfig = ./. + "/hosts/${name}";
-        hmConfig = ./. + "/hm/${name}.nix";
+      mkSystem =
+        {
+          system ? "x86_64-linux",
+          name,
+          hardware,
+          modules ? [ ],
+        }:
+        let
+          config = {
+            allowUnfree = true;
+          };
+          pkgs = import nixpkgs { inherit system config; };
+          style = import ./style { inherit pkgs inputs; };
+          nixosConfig = ./. + "/hosts/${name}";
+          hmConfig = ./. + "/hm/${name}.nix";
 
-        specialArgs = { inherit inputs unstable style; };
-      in
+          specialArgs = { inherit inputs style; };
+        in
         nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          modules = [
+          modules = modules ++ [
             ./modules/common.nix
             nixosConfig
             hardware
@@ -70,8 +88,8 @@
               home-manager.useUserPackages = true;
               home-manager.users.nyadiia.imports = [
                 hmConfig
-                inputs.nix-index-database.hmModules.nix-index
-                inputs.ironbar.homeManagerModules.default
+                nix-index-database.hmModules.nix-index
+                nixvim.homeManagerModules.nixvim
               ];
               home-manager.extraSpecialArgs = specialArgs;
             }
@@ -79,9 +97,15 @@
         };
     in
     {
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x84_64-linux.nixfmt-rfc-style;
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
       nixosConfigurations = {
-        hyprdash = mkSystem { "x86_64-linux" "cedar" nixos-hardware.nixosModules.framework-11th-gen-intel };
+        hyprdash = mkSystem {
+          name = "hyprdash";
+          hardware = nixos-hardware.nixosModules.framework-11th-gen-intel;
+          modules = [
+            inputs.lanzaboote.nixosModules.lanzaboote
+          ];
+        };
       };
       packages = eachSystem (pkgs: {
         nvim = nixvim.legacyPackages.${pkgs.system}.makeNixvimWithModule {

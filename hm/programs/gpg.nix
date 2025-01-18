@@ -1,6 +1,6 @@
 {
   programs = {
     gpg.enable = true;
-    gpg-agent.enableSshSupport = true;
   };
+  services.gpg-agent.enableSshSupport = true;
 }

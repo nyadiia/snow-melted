@@ -4,16 +4,24 @@
   imports = [
     ./gtk.nix
   ];
-  home.packages = with pkgs; [
-    gnome.gnome-tweaks
-
-    gnomeExtensions.user-themes
-    gnomeExtensions.dash-to-dock
-    gnomeExtensions.fullscreen-avoider
-    gnomeExtensions.blur-my-shell
-    gnomeExtensions.caffeine
-    gnomeExtensions.user-themes
-  ];
+  home.packages =
+    (with pkgs; [
+      gnome-tweaks
+      adw-gtk3
+    ])
+    ++ (with pkgs.gnomeExtensions; [
+      vitals
+      user-themes
+      dash-to-dock
+      fullscreen-avoider
+      blur-my-shell
+      caffeine
+      user-themes
+      app-menu-is-back
+      pop-shell
+      appindicator
+      tiling-shell
+    ]);
 
   dconf.settings = {
     "org/gnome/shell" = {
@@ -24,8 +32,13 @@
         "blur-my-shell@aunetx"
         "caffeine@patapon.info"
         "fullscreen-avoider@noobsai.github.com"
-        "openweather-extension@jenslody.de"
+        "appmenu-is-back@fthx"
+        "pop-shell@system76.com"
+        "Vitals@CoreCoding.com"
       ];
+    };
+    "org/gnome/desktop/input-sources" = {
+      xkb-options = "['terminate:ctrl_alt_bksp', 'compose:caps']";
     };
     "org/gnome/desktop/wm/keybindings" = {
       activate-window-menu = "disabled";
@@ -42,19 +55,27 @@
       toggle-maximized = [ "<Super>m" ];
       unmaximize = "disabled";
     };
-    # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-    #   name = "terminal";
-    #   command = "kgx";
-    #   binding = "<Super>Return";
-    # };
+    "org/gnome/desktop/wm/preferences" = {
+      button-layout = "appmenu:minimize,maximize,close";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+      name = "terminal";
+      command = "ghostty";
+      binding = "<Super>Return";
+    };
     "org/gnome/desktop/peripherals/touchpad" = {
       tap-to-click = true;
       two-finger-scrolling-enabled = true;
     };
     "org/gnome/mutter" = {
-      experimental-features = [ "scale-monitor-framebuffer" "variable-refresh-rate" ];
+      experimental-features = [
+        "scale-monitor-framebuffer"
+        "variable-refresh-rate"
+      ];
     };
     "org/gnome/desktop/interface" = {
+      accent-color = "pink";
+      font-name = "SF Pro 11 @opsz=17";
       show-battery-percentage = true;
     };
   };

@@ -1,18 +1,34 @@
 # common configuration for all systems
 # anything you want to be assumed to be installed should be in here!
 
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 {
   # enable networking
   networking.networkmanager.enable = true;
   systemd.services.NetworkManager-wait-online.enable = false;
 
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      libGL
+      harfbuzz
+      xorg.libX11
+      glib
+      fuse3
+      fuse
+      SDL2
+      libpng
+      libzip
+      tinyxml-2
+      spdlog
+    ];
+  };
 
   # common packages
-  # most things should be in home-manager, this is for system packages 
+  # most things should be in home-manager, this is for system packages
   environment.systemPackages = with pkgs; [
+    exfatprogs
     git
-    neovim
     killall
     zip
     unzip
@@ -97,7 +113,6 @@
       flake = "/home/nyadiia/snow";
     };
   };
-
 
   # i18n
   i18n = {

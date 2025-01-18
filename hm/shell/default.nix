@@ -6,6 +6,10 @@
       set fish_greeting
       starship init fish | source
     '';
+    shellInit = ''
+      set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+      gpgconf --launch gpg-agent
+    '';
     shellAliases = {
       la = "eza la";
       code = "codium";
@@ -27,7 +31,7 @@
   programs.eza = {
     enable = true;
     git = true;
-    icons = true;
+    icons = "auto";
   };
   programs.direnv = {
     enable = true;
