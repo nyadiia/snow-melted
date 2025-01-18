@@ -10,6 +10,7 @@
       adw-gtk3
     ])
     ++ (with pkgs.gnomeExtensions; [
+      kimpanel
       vitals
       user-themes
       dash-to-dock
@@ -27,6 +28,7 @@
     "org/gnome/shell" = {
       disable-user-extensions = false;
       enabled-extensions = [
+        "kimpanel@kde.org"
         "user-theme@gnome-shell-extensions.gcampax.github.com"
         "dash-to-dock@micxgx.gmail.com"
         "blur-my-shell@aunetx"
@@ -35,6 +37,8 @@
         "appmenu-is-back@fthx"
         "pop-shell@system76.com"
         "Vitals@CoreCoding.com"
+        "tilingshell@ferrarodomenico.com"
+        "appindicatorsupport@rgcjonas.gmail.com"
       ];
     };
     "org/gnome/desktop/input-sources" = {
